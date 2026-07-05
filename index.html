@@ -1,32 +1,116 @@
 <!doctype html><html lang="bn"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Fresh Egg Order</title>
+<title>Robel's Egg Zone - অর্ডার করুন</title>
 <style>
-body{margin:0;font-family:Arial;background:#f3f6fb}
-.card{max-width:430px;margin:18px auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.12)}
-.hero{background:linear-gradient(135deg,#ffb300,#ff7b00);padding:26px;color:#fff;text-align:center}
-.hero h1{margin:0}.hero p{margin:8px 0 0}
-.c{padding:18px} .pkg{border:1px solid #ddd;border-radius:12px;padding:10px;margin:10px 0}
-input,textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin:8px 0;box-sizing:border-box}
-button{width:100%;padding:14px;border:0;border-radius:12px;background:#ff7b00;color:#fff;font-size:17px;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.6;cursor:not-allowed}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fb;color:#222}
+.wrap{max-width:460px;margin:0 auto;background:#fff;min-height:100vh}
+.hero{background:linear-gradient(135deg,#ffb300,#ff7b00);padding:30px 20px;color:#fff;text-align:center}
+.hero .egg{font-size:46px}
+.hero h1{margin:6px 0 0;font-size:32px}
+.hero p{margin:8px 0 0;opacity:.95}
+
+.trust{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:16px}
+.trust div{background:#e8fff0;color:#14833b;border-radius:12px;padding:10px 8px;text-align:center;font-size:13px;font-weight:bold}
+
+.product-img{padding:0 16px}
+.product-img img{width:100%;border-radius:16px;display:block}
+.product-img p{text-align:center;font-weight:bold;margin:10px 0;font-size:15px}
+
+.c{padding:0 16px}
+.pkg{display:block;border:1px solid #ddd;border-radius:12px;padding:12px;margin:10px 0}
+.pkg input{width:auto;margin-right:8px}
+input[type=text],input:not([type=radio]),textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin:8px 0;box-sizing:border-box;font-size:15px}
+textarea{min-height:70px}
+
+.why{background:#fff8ec;border-radius:14px;padding:16px;margin:16px 0}
+.why h3{margin:0 0 10px;text-align:center}
+.why div{padding:6px 0;font-size:15px}
+
+button#submitBtn{width:100%;padding:15px;border:0;border-radius:12px;background:#ff7b00;color:#fff;font-size:18px;font-weight:bold;cursor:pointer}
+button#submitBtn:disabled{opacity:.6;cursor:not-allowed}
 .badge{background:#e8fff0;color:#14833b;padding:8px;border-radius:10px;text-align:center;margin:10px 0}
 .msg{text-align:center;padding:10px;border-radius:10px;margin:10px 0;font-weight:bold;display:none}
 .msg.ok{background:#e8fff0;color:#14833b}
 .msg.err{background:#ffe8e8;color:#c0392b}
-</style></head><body><div class="card"><div class="hero"><h1>🥚 ফ্রেশ ডিম</h1><p>আজই অর্ডার করুন • Cash on Delivery</p></div><div class="c">
+
+.reviews{padding:20px 16px;background:#fafafa;margin-top:10px}
+.reviews h3{text-align:center;margin:0 0 14px}
+.review-card{background:#fff;border-radius:12px;padding:12px 14px;margin-bottom:10px;box-shadow:0 2px 6px rgba(0,0,0,.06)}
+.stars{color:#ffb300;font-size:15px}
+.review-card b{display:block;margin-top:4px;font-size:14px}
+.review-card p{margin:4px 0 0;font-size:14px;color:#444}
+.note{font-size:12px;color:#999;text-align:center;padding:0 20px}
+
+.footer{background:#222;color:#fff;text-align:center;padding:26px 16px}
+.footer h3{margin:0 0 10px}
+.footer a{display:inline-block;color:#fff;text-decoration:none;background:#ff7b00;padding:12px 20px;border-radius:30px;font-weight:bold;margin:6px 4px}
+.footer a.wa{background:#25D366}
+.footer p{margin:14px 0 0;font-size:13px;opacity:.85}
+</style></head>
+
+<body><div class="wrap">
+
+<div class="hero">
+  <div class="egg">🥚</div>
+  <h1>Robel's Egg Zone</h1>
+  <p>আজই অর্ডার করুন • Cash on Delivery</p>
+</div>
+
+<div class="trust">
+  <div>✅ প্রতিদিন খামার থেকে সংগ্রহ</div>
+  <div>🚚 কাশিপুরের যেকোনো এলাকায় হোম ডেলিভারি</div>
+  <div>💵 ১০০% Cash on Delivery</div>
+  <div>📦 নিরাপদ প্যাকেজিং</div>
+</div>
+
+<div class="product-img">
+  <img src="https://placehold.co/800x500/ffb300/ffffff?text=আপনার+ডিমের+ছবি+এখানে+বসান" alt="ফ্রেশ ডিম">
+  <p>আজকের সংগ্রহ করা ফ্রেশ ডিম</p>
+</div>
+
+<div class="c">
 <div class="badge">🚚 দ্রুত ডেলিভারি</div>
+
 <form id="orderForm">
-<label class="pkg"><input type="radio" name="package" value="২০টি ডিম - ২৪০ টাকা" checked> ২০টি ডিম — <b>২৪০ টাকা</b></label>
-<label class="pkg"><input type="radio" name="package" value="৩০টি ডিম - ৩৬০ টাকা"> ৩০টি ডিম — <b>৩৬০ টাকা</b></label>
-<label class="pkg"><input type="radio" name="package" value="৬০টি ডিম - ৭২০ টাকা"> ৬০টি ডিম — <b>৭২০ টাকা</b></label>
-<input name="name" placeholder="আপনার নাম" required>
-<input name="phone" placeholder="মোবাইল নম্বর" required pattern="[0-9]{11}" title="১১ ডিজিটের মোবাইল নম্বর দিন">
-<textarea name="address" placeholder="সম্পূর্ণ ঠিকানা" required></textarea>
-<button type="submit" id="submitBtn">অর্ডার করুন</button>
-<div class="msg ok" id="okMsg">✅ আপনার অর্ডার সফলভাবে জমা হয়েছে!</div>
-<div class="msg err" id="errMsg">❌ সমস্যা হয়েছে, আবার চেষ্টা করুন।</div>
+  <label class="pkg"><input type="radio" name="package" value="২০টি ডিম - ২৪০ টাকা" checked> ২০টি ডিম — <b>২৪০ টাকা</b></label>
+  <label class="pkg"><input type="radio" name="package" value="৩০টি ডিম - ৩৬০ টাকা"> ৩০টি ডিম — <b>৩৬০ টাকা</b></label>
+  <label class="pkg"><input type="radio" name="package" value="৬০টি ডিম - ৭২০ টাকা"> ৬০টি ডিম — <b>৭২০ টাকা</b></label>
+
+  <div class="why">
+    <h3>কেন আমাদের কাছ থেকে কিনবেন?</h3>
+    <div>✅ প্রতিদিনের ফ্রেশ ডিম</div>
+    <div>✅ ভাঙা ডিম হলে পরিবর্তন করে দেওয়া হবে</div>
+    <div>✅ পরিষ্কার ও নিরাপদ প্যাকিং</div>
+    <div>✅ দ্রুত হোম ডেলিভারি</div>
+  </div>
+
+  <input name="name" placeholder="আপনার নাম" required>
+  <input name="phone" placeholder="মোবাইল নম্বর" required pattern="[0-9]{11}" title="১১ ডিজিটের মোবাইল নম্বর দিন">
+  <textarea name="address" placeholder="সম্পূর্ণ ঠিকানা" required></textarea>
+
+  <button type="submit" id="submitBtn">অর্ডার করুন</button>
+  <div class="msg ok" id="okMsg">✅ আপনার অর্ডার সফলভাবে জমা হয়েছে!</div>
+  <div class="msg err" id="errMsg">❌ সমস্যা হয়েছে, আবার চেষ্টা করুন।</div>
 </form>
-</div></div>
+</div>
+
+<div class="reviews">
+  <h3>⭐ আমাদের ক্রেতাদের অভিজ্ঞতা</h3>
+  <div class="review-card">
+    <div class="stars">প্রথম দিকের ক্রেতাদের জন্য বিশেষ সুযোগ</div>
+    <p>এখনো পর্যন্ত আমরা নতুন — আপনি হতে পারেন আমাদের প্রথম সন্তুষ্ট ক্রেতাদের একজন! অর্ডার করার পর আপনার মতামত আমাদের সাথে শেয়ার করুন।</p>
+  </div>
+  <p class="note">* বাস্তব ক্রেতার রিভিউ আসার পর এই সেকশন আপডেট করা হবে</p>
+</div>
+
+<div class="footer">
+  <h3>📞 অর্ডার করতে কল করুন</h3>
+  <a href="tel:01683903727">📞 01683-903727</a>
+  <a class="wa" href="https://wa.me/8801683903727">💬 WhatsApp</a>
+  <p>🚚 কাশিপুরের যেকোনো এলাকায় হোম ডেলিভারি<br>💵 Cash on Delivery</p>
+</div>
+
+</div>
 
 <script>
 // এখানে আপনার n8n webhook URL বসান (Production URL ব্যবহার করুন)
@@ -45,7 +129,6 @@ form.addEventListener('submit', async function(e) {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
 
-  // বাংলাদেশ সময় অনুযায়ী তারিখ ও সময় (Asia/Dhaka, UTC+6)
   data.timestamp = new Date().toLocaleString('bn-BD', {
     timeZone: 'Asia/Dhaka',
     dateStyle: 'medium',
