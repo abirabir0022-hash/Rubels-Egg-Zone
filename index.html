@@ -7,15 +7,73 @@ body{margin:0;font-family:Arial;background:#f3f6fb}
 .hero h1{margin:0}.hero p{margin:8px 0 0}
 .c{padding:18px} .pkg{border:1px solid #ddd;border-radius:12px;padding:10px;margin:10px 0}
 input,textarea{width:100%;padding:12px;border:1px solid #ccc;border-radius:10px;margin:8px 0;box-sizing:border-box}
-button{width:100%;padding:14px;border:0;border-radius:12px;background:#ff7b00;color:#fff;font-size:17px;font-weight:bold}
+button{width:100%;padding:14px;border:0;border-radius:12px;background:#ff7b00;color:#fff;font-size:17px;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
 .badge{background:#e8fff0;color:#14833b;padding:8px;border-radius:10px;text-align:center;margin:10px 0}
+.msg{text-align:center;padding:10px;border-radius:10px;margin:10px 0;font-weight:bold;display:none}
+.msg.ok{background:#e8fff0;color:#14833b}
+.msg.err{background:#ffe8e8;color:#c0392b}
 </style></head><body><div class="card"><div class="hero"><h1>🥚 ফ্রেশ ডিম</h1><p>আজই অর্ডার করুন • Cash on Delivery</p></div><div class="c">
 <div class="badge">🚚 দ্রুত ডেলিভারি</div>
-<label class="pkg"><input type="radio" name="p" checked> ২০টি ডিম — <b>২৪০ টাকা</b></label>
-<label class="pkg"><input type="radio" name="p"> ৩০টি ডিম — <b>৩৬০ টাকা</b></label>
-<label class="pkg"><input type="radio" name="p"> ৬০টি ডিম — <b>৭২০ টাকা</b></label>
-<input placeholder="আপনার নাম">
-<input placeholder="মোবাইল নম্বর">
-<textarea placeholder="সম্পূর্ণ ঠিকানা"></textarea>
-<button>অর্ডার করুন</button>
-</div></div></body></html>
+<form id="orderForm">
+<label class="pkg"><input type="radio" name="package" value="২০টি ডিম - ২৪০ টাকা" checked> ২০টি ডিম — <b>২৪০ টাকা</b></label>
+<label class="pkg"><input type="radio" name="package" value="৩০টি ডিম - ৩৬০ টাকা"> ৩০টি ডিম — <b>৩৬০ টাকা</b></label>
+<label class="pkg"><input type="radio" name="package" value="৬০টি ডিম - ৭২০ টাকা"> ৬০টি ডিম — <b>৭২০ টাকা</b></label>
+<input name="name" placeholder="আপনার নাম" required>
+<input name="phone" placeholder="মোবাইল নম্বর" required pattern="[0-9]{11}" title="১১ ডিজিটের মোবাইল নম্বর দিন">
+<textarea name="address" placeholder="সম্পূর্ণ ঠিকানা" required></textarea>
+<button type="submit" id="submitBtn">অর্ডার করুন</button>
+<div class="msg ok" id="okMsg">✅ আপনার অর্ডার সফলভাবে জমা হয়েছে!</div>
+<div class="msg err" id="errMsg">❌ সমস্যা হয়েছে, আবার চেষ্টা করুন।</div>
+</form>
+</div></div>
+
+<script>
+// এখানে আপনার n8n webhook URL বসান (Production URL ব্যবহার করুন)
+const WEBHOOK_URL = "https://server.automationlearners.com/webhook/01ceafbb-dfdf-4bb0-b003-5e2404812736";
+
+const form = document.getElementById('orderForm');
+const submitBtn = document.getElementById('submitBtn');
+const okMsg = document.getElementById('okMsg');
+const errMsg = document.getElementById('errMsg');
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+  okMsg.style.display = 'none';
+  errMsg.style.display = 'none';
+
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+
+  // বাংলাদেশ সময় অনুযায়ী তারিখ ও সময় (Asia/Dhaka, UTC+6)
+  data.timestamp = new Date().toLocaleString('bn-BD', {
+    timeZone: 'Asia/Dhaka',
+    dateStyle: 'medium',
+    timeStyle: 'medium'
+  });
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'পাঠানো হচ্ছে...';
+
+  try {
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      okMsg.style.display = 'block';
+      form.reset();
+    } else {
+      errMsg.style.display = 'block';
+    }
+  } catch (error) {
+    errMsg.style.display = 'block';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'অর্ডার করুন';
+  }
+});
+</script>
+</body></html>
